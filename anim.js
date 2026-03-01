@@ -1,72 +1,62 @@
-// Sincronizar las letras con la canción
-var audio = document.querySelector("audio");
+// Reloj interno para sincronizar las letras sin audio
+var timeCount = 0;
 var lyrics = document.querySelector("#lyrics");
 
 // Array de objetos que contiene cada línea y su tiempo de aparición en segundos
 var lyricsData = [
-  { text: "At the time", time: 15 },
-  { text: "The whisper of birds", time: 18 },
-  { text: "Lonely before the sun cried", time: 27 },
-  { text: "Fell from the sky", time: 32 },
-  { text: "Like water drops", time: 33 },
-  { text: "Where I'm now? I don't know why", time: 41 },
-  { text: "Nice butterflies in my hands", time: 47 },
-  { text: "Too much light for twilight", time: 54 },
-  { text: "In the mood for the flowers love", time: 59 },
-  { text: "That vision", time: 67 },
-  { text: "Really strong, blew my mind", time: 72 },
-  { text: "Silence Let me see what it was", time: 78 },
-  { text: "I only want to live in clouds", time: 83 },
-  { text: "Where I'm now? I don't know why", time: 91 },
-  { text: "Nice butterflies in my hands", time: 97 },
-  { text: "Too much light for twilight", time: 104 },
-  { text: "In the mood for the flowers love", time: 108 },
-  { text: "At the time", time: 144 },
-  { text: "The whisper of birds", time: 148 },
-  { text: "Lonely before the sun cried", time: 153 },
-  { text: "Fell from the sky", time: 158 },
-  { text: "Like water drops", time: 164 },
-  { text: "Where I'm now? I don't know why", time: 169 },
-  { text: "Nice butterflies in my hands", time: 176 },
-  { text: "Too much light for twilight", time: 183 },
-  { text: "In the mood for the flowers", time: 188 },
-  { text: "Love.", time: 140 },
+  { text: "Hola mi Pao 💛", time: 0 },
+  { text: "Hoy el mundo cumple 25 años de tenerte en él ✨", time: 6 },
+  { text: "Y yo celebro que la vida me haya llevado hasta ti 🥹", time: 13 },
+  { text: "Desde que llegaste, todo tiene más sentido", time: 20 },
+  { text: "Más luz, más calma, más ilusión ☀️", time: 27 },
+  { text: "Contigo entendí que amar no es solo sentir…", time: 35 },
+  { text: "Es decidir, cuidar, escuchar y quedarte 🤍", time: 42 },
+  { text: "Gracias por tu dulzura, por tu risa y tu mirada", time: 50 },
+  { text: "Por ser mi paz y también mi emoción favorita 💫", time: 58 },
+  { text: "Me haces sentir mariposas incluso en los días normales 🦋", time: 66 },
+  { text: "Y contigo quiero escribir cada capítulo de mi vida 📖", time: 74 },
+  { text: "Con paciencia, con respeto y con amor verdadero", time: 82 },
+  { text: "Que este nuevo año te regale sueños cumplidos", time: 90 },
+  { text: "Metas logradas y muchos momentos felices 🎉", time: 98 },
+  { text: "Y si me lo permites…", time: 106 },
+  { text: "Quiero seguir siendo quien camine a tu lado 🤍", time: 112 },
+  { text: "Quien te abrace en los días difíciles", time: 120 },
+  { text: "Y quien celebre cada una de tus victorias 🥂", time: 128 },
+  { text: "Feliz cumpleaños 25, mi niña hermosa 🎂✨", time: 136 },
+  { text: "Te quiero más de lo que las palabras pueden explicar 💕", time: 144 }
 ];
-
 // Animar las letras
 function updateLyrics() {
-  var time = Math.floor(audio.currentTime);
+  timeCount += 1; // Avanza 1 segundo cada ciclo
+
   var currentLine = lyricsData.find(
-    (line) => time >= line.time && time < line.time + 6
+    (line) => timeCount >= line.time && timeCount < line.time + 6
   );
 
   if (currentLine) {
-    // Calcula la opacidad basada en el tiempo en la línea actual
-    var fadeInDuration = 0.1; // Duración del efecto de aparición en segundos
-    var opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-
-    // Aplica el efecto de aparición
+    var fadeInDuration = 0.1;
+    var opacity = Math.min(1, (timeCount - currentLine.time) / fadeInDuration);
     lyrics.style.opacity = opacity;
     lyrics.innerHTML = currentLine.text;
   } else {
-    // Restablece la opacidad y el contenido si no hay una línea actual
     lyrics.style.opacity = 0;
     lyrics.innerHTML = "";
   }
 }
 
+// Ejecutar cada segundo (1000 ms)
 setInterval(updateLyrics, 1000);
 
-//funcion titulo
-// Función para ocultar el título después de 216 segundos
+// Función para ocultar el título después de un tiempo
 function ocultarTitulo() {
   var titulo = document.querySelector(".titulo");
-  titulo.style.animation =
-    "fadeOut 3s ease-in-out forwards"; /* Duración y función de temporización de la desaparición */
-  setTimeout(function () {
-    titulo.style.display = "none";
-  }, 3000); // Espera 3 segundos antes de ocultar completamente
+  if(titulo) {
+      titulo.style.animation = "fadeOut 3s ease-in-out forwards";
+      setTimeout(function () {
+        titulo.style.display = "none";
+      }, 3000);
+  }
 }
 
-// Llama a la función después de 216 segundos (216,000 milisegundos)
+// Llama a la función después de 216 segundos
 setTimeout(ocultarTitulo, 216000);
